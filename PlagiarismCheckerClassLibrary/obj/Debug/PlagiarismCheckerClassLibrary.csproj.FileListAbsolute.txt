@@ -4,3 +4,9 @@ E:\GitHub\PlagiarismChecker\PlagiarismCheckerClassLibrary\obj\Debug\PlagiarismCh
 E:\GitHub\PlagiarismChecker\PlagiarismCheckerClassLibrary\obj\Debug\PlagiarismCheckerClassLibrary.dll
 E:\GitHub\PlagiarismChecker\PlagiarismCheckerClassLibrary\obj\Debug\PlagiarismCheckerClassLibrary.pdb
 E:\GitHub\PlagiarismChecker\PlagiarismCheckerClassLibrary\bin\Debug\DocumentFormat.OpenXml.dll
+C:\GitHub\PlagiarismChecker\PlagiarismCheckerClassLibrary\obj\Debug\PlagiarismCheckerClassLibrary.csprojResolveAssemblyReference.cache
+C:\GitHub\PlagiarismChecker\PlagiarismCheckerClassLibrary\obj\Debug\PlagiarismCheckerClassLibrary.dll
+C:\GitHub\PlagiarismChecker\PlagiarismCheckerClassLibrary\bin\Debug\PlagiarismCheckerClassLibrary.dll
+C:\GitHub\PlagiarismChecker\PlagiarismCheckerClassLibrary\bin\Debug\PlagiarismCheckerClassLibrary.pdb
+C:\GitHub\PlagiarismChecker\PlagiarismCheckerClassLibrary\bin\Debug\DocumentFormat.OpenXml.dll
+C:\GitHub\PlagiarismChecker\PlagiarismCheckerClassLibrary\obj\Debug\PlagiarismCheckerClassLibrary.pdb
