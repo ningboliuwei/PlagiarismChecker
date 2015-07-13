@@ -1,0 +1,11 @@
+E:\GitHub\PlagiarismChecker\PlagiarismChecker\obj\Debug\PlagiarismCheckerWin.csprojResolveAssemblyReference.cache
+E:\GitHub\PlagiarismChecker\PlagiarismChecker\obj\Debug\PlagiarismChecker.frmMain.resources
+E:\GitHub\PlagiarismChecker\PlagiarismChecker\obj\Debug\PlagiarismChecker.Properties.Resources.resources
+E:\GitHub\PlagiarismChecker\PlagiarismChecker\obj\Debug\PlagiarismCheckerWin.csproj.GenerateResource.Cache
+E:\GitHub\PlagiarismChecker\PlagiarismChecker\bin\Debug\PlagiarismChecker.exe.config
+E:\GitHub\PlagiarismChecker\PlagiarismChecker\bin\Debug\PlagiarismChecker.exe
+E:\GitHub\PlagiarismChecker\PlagiarismChecker\bin\Debug\PlagiarismChecker.pdb
+E:\GitHub\PlagiarismChecker\PlagiarismChecker\bin\Debug\PlagiarismCheckerClassLibrary.dll
+E:\GitHub\PlagiarismChecker\PlagiarismChecker\bin\Debug\PlagiarismCheckerClassLibrary.pdb
+E:\GitHub\PlagiarismChecker\PlagiarismChecker\obj\Debug\PlagiarismChecker.exe
+E:\GitHub\PlagiarismChecker\PlagiarismChecker\obj\Debug\PlagiarismChecker.pdb
