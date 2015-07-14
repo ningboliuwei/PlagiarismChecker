@@ -4,10 +4,12 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using NetOffice.WordApi;
 using NetOffice.WordApi.Enums;
+using PlagiarismChecker.Models;
 using PlagiarismChecker.Utilities;
 using NetOffice;
 
@@ -16,6 +18,7 @@ namespace PlagiarismChecker
 {
 	public partial class frmMain : Form
 	{
+		private List<string> _files=new List<string>();
 		public frmMain()
 		{
 			InitializeComponent();
@@ -27,11 +30,9 @@ namespace PlagiarismChecker
 
 		private void button1_Click(object sender, EventArgs e)
 		{
-			List<string> docFiles = new List<string>();
-			List<string> targetFiles = new List<string>();
-			OpenFileDialog ofdMain = new OpenFileDialog();
-			ofdMain.Filter = "doc, docx文件|*.doc;*.docx";
-			ofdMain.Multiselect = true;
+			var docFiles = new List<string>();
+			var targetFiles = new List<string>();
+			var ofdMain = new OpenFileDialog {Filter = "doc, docx文件|*.doc;*.docx", Multiselect = true};
 
 			if (ofdMain.ShowDialog() == DialogResult.OK)
 			{
@@ -51,10 +52,22 @@ namespace PlagiarismChecker
 
 				DocxHelper.ConvertToDocx(docFiles.ToArray());
 
-				BackgroundWorker bgw = new BackgroundWorker();
-				bgw.DoWork += bgw_DoWork;
-				bgw.RunWorkerCompleted += bgw_RunWorkerCompleted;
-				bgw.RunWorkerAsync(targetFiles);
+//				var bgw = new BackgroundWorker();
+//				bgw.DoWork += bgw_DoWork;
+//				bgw.RunWorkerCompleted += bgw_RunWorkerCompleted;
+//				bgw.RunWorkerAsync(targetFiles);
+//
+//				
+				ZipHelper.UnZip(targetFiles);
+
+				var infos = targetFiles.Select(targetFile => new TargetDocumentInfo(targetFile)).ToList();
+
+				foreach (var info in infos)
+				{
+					info.GetDocumentContentFiles();
+				}
+
+				
 			}
 		}
 
@@ -65,7 +78,9 @@ namespace PlagiarismChecker
 
 		private void bgw_DoWork(object sender, DoWorkEventArgs e)
 		{
-			ZipHelper.UnZip((List<string>) e.Argument);
+			
 		}
+
+		
 	}
 }
