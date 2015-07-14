@@ -29,3 +29,5 @@ C:\GitHub\PlagiarismChecker\PlagiarismChecker\obj\Debug\PlagiarismChecker.frmMai
 C:\GitHub\PlagiarismChecker\PlagiarismChecker\obj\Debug\PlagiarismChecker.Properties.Resources.resources
 C:\GitHub\PlagiarismChecker\PlagiarismChecker\obj\Debug\PlagiarismCheckerWin.csproj.GenerateResource.Cache
 C:\GitHub\PlagiarismChecker\PlagiarismChecker\bin\Debug\DocumentFormat.OpenXml.dll
+C:\GitHub\PlagiarismChecker\PlagiarismChecker\bin\Debug\Ionic.Zip.dll
+C:\GitHub\PlagiarismChecker\PlagiarismChecker\bin\Debug\Ionic.Zip.xml

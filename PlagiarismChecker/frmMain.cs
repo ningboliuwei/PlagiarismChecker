@@ -28,8 +28,9 @@ namespace PlagiarismChecker
 		private void button1_Click(object sender, EventArgs e)
 		{
 			List<string> docFiles = new List<string>();
+			List<string> targetFiles = new List<string>();
 			OpenFileDialog ofdMain = new OpenFileDialog();
-			ofdMain.Filter = "doc文件|*.doc";
+			ofdMain.Filter = "doc, docx文件|*.doc;*.docx";
 			ofdMain.Multiselect = true;
 
 			if (ofdMain.ShowDialog() == DialogResult.OK)
@@ -39,11 +40,32 @@ namespace PlagiarismChecker
 					if (Path.GetExtension(fileName) == ".doc")
 					{
 						docFiles.Add(fileName);
+						//得到转换后的 .docx 扩展名
+						targetFiles.Add(fileName + "x");
+					}
+					else
+					{
+						targetFiles.Add(fileName);
 					}
 				}
 
 				DocxHelper.ConvertToDocx(docFiles.ToArray());
+
+				BackgroundWorker bgw = new BackgroundWorker();
+				bgw.DoWork += bgw_DoWork;
+				bgw.RunWorkerCompleted += bgw_RunWorkerCompleted;
+				bgw.RunWorkerAsync(targetFiles);
 			}
+		}
+
+		private void bgw_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+		{
+			MessageBox.Show("Done");
+		}
+
+		private void bgw_DoWork(object sender, DoWorkEventArgs e)
+		{
+			ZipHelper.UnZip((List<string>) e.Argument);
 		}
 	}
 }
