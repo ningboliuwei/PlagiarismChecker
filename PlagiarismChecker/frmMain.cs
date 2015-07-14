@@ -1,24 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Windows.Forms;
-using NetOffice.WordApi;
-using NetOffice.WordApi.Enums;
 using PlagiarismChecker.Models;
 using PlagiarismChecker.Utilities;
-using NetOffice;
-
 
 namespace PlagiarismChecker
 {
 	public partial class frmMain : Form
 	{
-		private List<string> _files=new List<string>();
+		private List<string> _files = new List<string>();
+
 		public frmMain()
 		{
 			InitializeComponent();
@@ -32,11 +26,11 @@ namespace PlagiarismChecker
 		{
 			var docFiles = new List<string>();
 			var targetFiles = new List<string>();
-			var ofdMain = new OpenFileDialog {Filter = "doc, docx文件|*.doc;*.docx", Multiselect = true};
+			var ofdMain = new OpenFileDialog { Filter = "doc, docx文件|*.doc;*.docx", Multiselect = true };
 
 			if (ofdMain.ShowDialog() == DialogResult.OK)
 			{
-				foreach (var fileName in ofdMain.FileNames)
+				foreach (string fileName in ofdMain.FileNames)
 				{
 					if (Path.GetExtension(fileName) == ".doc")
 					{
@@ -52,22 +46,38 @@ namespace PlagiarismChecker
 
 				DocxHelper.ConvertToDocx(docFiles.ToArray());
 
-//				var bgw = new BackgroundWorker();
-//				bgw.DoWork += bgw_DoWork;
-//				bgw.RunWorkerCompleted += bgw_RunWorkerCompleted;
-//				bgw.RunWorkerAsync(targetFiles);
-//
-//				
+				//				var bgw = new BackgroundWorker();
+				//				bgw.DoWork += bgw_DoWork;
+				//				bgw.RunWorkerCompleted += bgw_RunWorkerCompleted;
+				//				bgw.RunWorkerAsync(targetFiles);
+				//
+				//				
 				ZipHelper.UnZip(targetFiles);
 
-				var infos = targetFiles.Select(targetFile => new TargetDocumentInfo(targetFile)).ToList();
 
-				foreach (var info in infos)
+				var documents = targetFiles.Select(targetFile => new TargetDocumentInfo(targetFile)).ToList();
+
+				foreach (TargetDocumentInfo document in documents)
 				{
-					info.GetDocumentContentFiles();
+					document.GetDocumentContentFiles();
 				}
 
-				
+				var results = from document in documents
+							  from contentFile in document.DocumentContentFiles
+							  orderby contentFile.Md5Hash
+							  select new
+							  {
+								  Sno = document.StudentNo,
+								  Sname = document.StudentName,
+								  document.ExperimentNo,
+								  document.ExperimentName,
+								  contentFile.FilePath,
+								  contentFile.Md5Hash
+							  };
+
+
+				dataGridView1.DataSource = results.ToList();
+				dataGridView1.AutoResizeColumns();
 			}
 		}
 
@@ -78,9 +88,6 @@ namespace PlagiarismChecker
 
 		private void bgw_DoWork(object sender, DoWorkEventArgs e)
 		{
-			
 		}
-
-		
 	}
 }

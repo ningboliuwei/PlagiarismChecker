@@ -36,7 +36,6 @@ namespace PlagiarismChecker.Utilities
 					doc.Close();
 				}
 				word.Quit();
-				word.Dispose();
 			}
 		}
 
