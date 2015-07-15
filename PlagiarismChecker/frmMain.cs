@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
@@ -55,13 +56,7 @@ namespace PlagiarismChecker
 				//				
 				ZipHelper.UnZip(targetFiles);
 
-
 				List<TargetDocumentInfo> documents = targetFiles.Select(targetFile => new TargetDocumentInfo(targetFile)).ToList();
-
-				foreach (TargetDocumentInfo document in documents)
-				{
-					document.GetDocumentContentFiles();
-				}
 
 				var results = from document in documents
 							  from contentFile in document.DocumentContentFiles
@@ -77,15 +72,13 @@ namespace PlagiarismChecker
 							  };
 
 				var filteredGroups = from line in results
-					group line by line.Md5Hash
-					into grp
-					where grp.Count() > 1
-					select new
-					{
-						Md5Hash = grp.Key,
-						Count = grp.Count()
-					};
-					
+									 group line by line.Md5Hash
+										 into grouping
+										 where grouping.Count() > 1
+										 select new
+										 {
+											 Md5Hash = grouping.Key,
+										 };
 
 				var filteredResults = from line in results
 									  join g in filteredGroups
@@ -100,13 +93,37 @@ namespace PlagiarismChecker
 										  line.Md5Hash
 									  };
 
-
-			
-
 				dataGridView1.DataSource = filteredResults.ToList();
 				dataGridView1.AutoResizeColumns();
 				ChangeColor(5, dataGridView1);
+				var names = (from line in filteredResults
+							 select line.Sname).Distinct();
+				DrawPicture(names.ToList());
 			}
+		}
+
+		private void DrawPicture(List<string> names)
+		{
+			Pen p = new Pen(new SolidBrush(Color.Red));
+			int width = 1000;
+			int height = 1000;
+			var buffer = new Bitmap(width, height);
+
+			Graphics g = Graphics.FromImage(buffer);
+			g.FillRectangle(new SolidBrush(Color.White), 0, 0, width, height);
+
+			Font characterFont = new Font(Font.FontFamily, 10, FontStyle.Bold);
+
+			Random random = new Random(DateTime.Now.Millisecond);
+			foreach (var name in names)
+			{
+				int r = 50;
+				int x = random.Next(r, width - r);
+				int y = random.Next(r, height - r);
+				g.DrawEllipse(p, new Rectangle(x, y, r, r));
+				g.DrawString(name, characterFont, new SolidBrush(Color.Black), x, y);
+			}
+			buffer.Save("r:\\1.png", ImageFormat.Png);
 		}
 
 		private void ChangeColor(int keyIndex, DataGridView grid)
@@ -114,29 +131,26 @@ namespace PlagiarismChecker
 			var colorList = new List<Color>
 			{
 				Color.LightPink,
-//			Color.LightCyan,
-//			Color.LightGreen,
-//			Color.LightYellow,
-//			Color.LightSlateGray,
-//			Color.LightSeaGreen,
-//			Color.LightGray,
-//			Color.LightCoral,
-//			Color.LightBlue,
-//			Color.LightGoldenrodYellow,
-//			Color.LightSteelBlue,
-//			Color.LightSalmon,
+				//Color.LightCyan,
+				//Color.LightGreen,
+				//Color.LightYellow,
+				//Color.LightSlateGray,
+				//Color.LightSeaGreen,
+				//Color.LightGray,
+				//Color.LightCoral,
+				//Color.LightBlue,
+				//Color.LightGoldenrodYellow,
+				//Color.LightSteelBlue,
+				//Color.LightSalmon,
 				Color.LightSkyBlue
 			};
 
 
 			int colorIndex = 0;
-			int sameCount = 0;
 
 			grid.Rows[0].DefaultCellStyle.BackColor = colorList[colorIndex];
 			for (int i = 1; i < grid.Rows.Count; i++)
 			{
-
-
 				if (grid.Rows[i].Cells[keyIndex].Value.ToString() != grid.Rows[i - 1].Cells[keyIndex].Value.ToString())
 				{
 					colorIndex++;
