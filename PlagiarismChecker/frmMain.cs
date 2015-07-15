@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
@@ -55,7 +56,7 @@ namespace PlagiarismChecker
 				ZipHelper.UnZip(targetFiles);
 
 
-				var documents = targetFiles.Select(targetFile => new TargetDocumentInfo(targetFile)).ToList();
+				List<TargetDocumentInfo> documents = targetFiles.Select(targetFile => new TargetDocumentInfo(targetFile)).ToList();
 
 				foreach (TargetDocumentInfo document in documents)
 				{
@@ -75,11 +76,81 @@ namespace PlagiarismChecker
 								  contentFile.Md5Hash
 							  };
 
+				var filteredGroups = from line in results
+					group line by line.Md5Hash
+					into grp
+					where grp.Count() > 1
+					select new
+					{
+						Md5Hash = grp.Key,
+						Count = grp.Count()
+					};
+					
 
-				dataGridView1.DataSource = results.ToList();
+				var filteredResults = from line in results
+									  join g in filteredGroups
+										  on line.Md5Hash equals g.Md5Hash
+									  select new
+									  {
+										  line.Sno,
+										  line.Sname,
+										  line.ExperimentNo,
+										  line.ExperimentName,
+										  line.FilePath,
+										  line.Md5Hash
+									  };
+
+
+			
+
+				dataGridView1.DataSource = filteredResults.ToList();
 				dataGridView1.AutoResizeColumns();
+				ChangeColor(5, dataGridView1);
 			}
 		}
+
+		private void ChangeColor(int keyIndex, DataGridView grid)
+		{
+			var colorList = new List<Color>
+			{
+				Color.LightPink,
+//			Color.LightCyan,
+//			Color.LightGreen,
+//			Color.LightYellow,
+//			Color.LightSlateGray,
+//			Color.LightSeaGreen,
+//			Color.LightGray,
+//			Color.LightCoral,
+//			Color.LightBlue,
+//			Color.LightGoldenrodYellow,
+//			Color.LightSteelBlue,
+//			Color.LightSalmon,
+				Color.LightSkyBlue
+			};
+
+
+			int colorIndex = 0;
+			int sameCount = 0;
+
+			grid.Rows[0].DefaultCellStyle.BackColor = colorList[colorIndex];
+			for (int i = 1; i < grid.Rows.Count; i++)
+			{
+
+
+				if (grid.Rows[i].Cells[keyIndex].Value.ToString() != grid.Rows[i - 1].Cells[keyIndex].Value.ToString())
+				{
+					colorIndex++;
+
+					if (colorIndex >= colorList.Count)
+					{
+						colorIndex = 0;
+					}
+				}
+
+				grid.Rows[i].DefaultCellStyle.BackColor = colorList[colorIndex];
+			}
+		}
+
 
 		private void bgw_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
 		{
