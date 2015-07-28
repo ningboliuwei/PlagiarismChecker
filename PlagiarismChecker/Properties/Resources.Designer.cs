@@ -59,5 +59,14 @@ namespace PlagiarismChecker.Properties {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   查找类似 确定退出程序吗? 的本地化字符串。
+        /// </summary>
+        internal static string frmMain_frmMain_FormClosing_确定退出程序吗_ {
+            get {
+                return ResourceManager.GetString("frmMain_frmMain_FormClosing_确定退出程序吗_", resourceCulture);
+            }
+        }
     }
 }

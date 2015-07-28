@@ -80,12 +80,12 @@
     <Compile Include="frmMain.Designer.cs">
       <DependentUpon>frmMain.cs</DependentUpon>
     </Compile>
-    <Compile Include="Models\DocumentContentFile.cs" />
-    <Compile Include="Models\TargetDocumentInfo.cs" />
+    <Compile Include="Models\ContentFileInfo.cs" />
+    <Compile Include="Models\DocumentInfo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utilities\AdjacencyList.cs" />
-    <Compile Include="Utilities\FileHelper.cs" />
+    <Compile Include="Utilities\WordFileHelper.cs" />
     <Compile Include="Utilities\PlotHelper.cs" />
     <Compile Include="Utilities\ZipHelper.cs" />
     <EmbeddedResource Include="frmMain.resx">
