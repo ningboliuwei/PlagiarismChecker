@@ -200,20 +200,42 @@ namespace PlagiarismChecker
                                orderby line.DocumentName, line.FilePath
                                select line).Distinct();
 
+                var result3 = (from line in filteredResults
+                               orderby line.DocumentName
+                               select line.DocumentName).Distinct();
+
                 dgvFiles.DataSource = filteredResults.ToList();
                 dgvFiles.AutoResizeColumns();
 
 
+                var root = new TreeNode("root");
+               
+                tvwFiles.Nodes.Add(root);
+
+                foreach (var doc in result3)
+                {
+                    root.Nodes.Add(doc);
+                }
+
+
                 foreach (var a in result2.ToList())
                 {
-                    tvwFiles.Nodes.Add(new TreeNode(a.FilePath));
+                    foreach (TreeNode node in root.Nodes)
+                    {
+                        if (node.Text == a.DocumentName)
+                        {
+                            node.Nodes.Add(new TreeNode(Path.GetFileName(a.FilePath)));
+                        }
+                    }
                 }
+
+                tvwFiles.ExpandAll();
 
 
                 if (dgvFiles.Rows.Count != 0)
                 {
                     //5 means judge by hashcode
-                    ChangeColor(5, dgvFiles);
+                    ChangeColor(6, dgvFiles);
                 }
 
                 //                    var names = (from line in filteredResults
