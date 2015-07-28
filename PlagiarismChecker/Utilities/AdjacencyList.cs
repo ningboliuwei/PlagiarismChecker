@@ -42,10 +42,10 @@
 		public void AddVertex(T item) //添加一个顶点
 		{
 			//不允许插入重复值
-			if (this.Contains(item))
-			{
-				throw new ArgumentException("插入了重复顶点！");
-			}
+			//if (this.Contains(item))
+			//{
+			//	throw new ArgumentException("插入了重复顶点！");
+			//}
 			this.items.Add(new Vertex<T>(item));
 		}
 

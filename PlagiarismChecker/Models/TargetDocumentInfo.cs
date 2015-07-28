@@ -8,6 +8,7 @@ namespace PlagiarismChecker.Models
 {
 	class TargetDocumentInfo
 	{
+        public string DocumentName { get; set; }
 		public string FilePath { get; set; }
 		public string ExtractedDirectoryPath { get; set; }
 		public string StudentNo { get; set; }
@@ -22,6 +23,7 @@ namespace PlagiarismChecker.Models
 			DocumentContentFiles = new List<DocumentContentFile>();
 			FilePath = filePath;
 			ExtractedDirectoryPath = Path.Combine(Path.GetDirectoryName(filePath), Path.GetFileNameWithoutExtension(filePath));
+		    DocumentName = Path.GetFileName(filePath);
 
 			string mainFileName = Path.GetFileNameWithoutExtension(filePath);
 			if (mainFileName != null)
@@ -41,6 +43,8 @@ namespace PlagiarismChecker.Models
 				int minute = Convert.ToInt32(submittedTimeStr.Substring(10, 2));
 				int second = Convert.ToInt32(submittedTimeStr.Substring(12, 2));
 				SubmittedTime = new DateTime(year, month, day, hour, minute, second);
+
+				GetDocumentContentFiles();
 			}
 		}
 

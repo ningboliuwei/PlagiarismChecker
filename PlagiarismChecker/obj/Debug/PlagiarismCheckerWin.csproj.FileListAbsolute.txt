@@ -31,3 +31,4 @@ C:\GitHub\PlagiarismChecker\PlagiarismChecker\obj\Debug\PlagiarismCheckerWin.csp
 C:\GitHub\PlagiarismChecker\PlagiarismChecker\bin\Debug\DocumentFormat.OpenXml.dll
 C:\GitHub\PlagiarismChecker\PlagiarismChecker\bin\Debug\Ionic.Zip.dll
 C:\GitHub\PlagiarismChecker\PlagiarismChecker\bin\Debug\Ionic.Zip.xml
+C:\GitHub\PlagiarismChecker\PlagiarismChecker\bin\Debug\stdole.dll
